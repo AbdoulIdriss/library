@@ -112,8 +112,8 @@
                   <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:shadow-sm transition-shadow">
                     <div class="flex-1">
                       <div class="flex items-center gap-3">
-                        @if (reservation.book?.coverUrl) {
-                          <img [src]="reservation.book?.coverUrl" [alt]="reservation.book?.title" class="w-12 h-16 object-cover rounded">
+                        @if (reservation.book.coverUrl) {
+                          <img [src]="reservation.book.coverUrl" [alt]="reservation.book.title" class="w-12 h-16 object-cover rounded">
                         }
                         <div>
                           <h3 class="font-medium text-gray-900">{{ reservation.book.title }}</h3>
