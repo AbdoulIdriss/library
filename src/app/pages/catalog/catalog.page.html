@@ -1,0 +1,13 @@
+<section class="max-w-6xl mx-auto px-4 py-6">
+  <div class="mb-4">
+    <app-search-bar (search)="onSearch($event)"></app-search-bar>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    @for (b of books(); track b.id) {
+      <app-book-card [book]="b" />
+    } @empty {
+      <div class="text-gray-600">No books match your search.</div>
+    }
+  </div>
+</section>
+

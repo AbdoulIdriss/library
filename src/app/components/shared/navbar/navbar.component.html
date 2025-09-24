@@ -1,0 +1,37 @@
+<nav class="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-black/10">
+  <div class="max-w-6xl mx-auto px-4 py-3">
+    <div class="flex items-center gap-3">
+      <button class="md:hidden p-2 rounded hover:bg-gray-100" (click)="toggleMobile()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <a class="font-bold text-gray-900" routerLink="/">📚 Library</a>
+      <div class="hidden md:flex items-center gap-4">
+        <a class="text-gray-700 hover:text-purple-700" routerLink="/" routerLinkActive="text-purple-700 font-semibold" ariaCurrentWhenActive="page">Catalog</a>
+        <a class="text-gray-700 hover:text-purple-700" routerLink="/dashboard" routerLinkActive="text-purple-700 font-semibold" ariaCurrentWhenActive="page">Dashboard</a>
+        <a class="text-gray-700 hover:text-purple-700" routerLink="/admin" routerLinkActive="text-purple-700 font-semibold" ariaCurrentWhenActive="page">Admin</a>
+      </div>
+      <div class="ml-auto flex items-center gap-2">
+        <form class="relative flex-1 min-w-0" (ngSubmit)="onSearch()">
+          <input class="w-32 sm:w-44 md:w-64 rounded-lg border border-gray-300 bg-white/80 px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" type="search" [(ngModel)]="q" name="q" placeholder="Search..." />
+        </form>
+        <app-notification-panel />
+        @if (auth.isLoggedIn()) {
+          <button class="md:hidden rounded-md border border-gray-300 text-sm px-3 py-2" (click)="logout()">Logout</button>
+          <span class="hidden md:inline text-sm text-gray-600 mr-1">{{ auth.currentUser()?.name }}</span>
+          <button class="hidden md:inline rounded-md bg-purple-600 text-white text-sm px-3 py-2 hover:bg-purple-700" (click)="logout()">Logout</button>
+        } @else {
+          <a routerLink="/login" class="rounded-md border border-gray-300 text-sm px-3 py-2 hover:border-purple-400">Login</a>
+        }
+      </div>
+    </div>
+
+    <div class="md:hidden mt-3" *ngIf="mobileOpen()">
+      <div class="flex flex-col gap-2">
+        <a class="text-gray-700 hover:text-purple-700" routerLink="/" (click)="mobileOpen.set(false)">Catalog</a>
+        <a class="text-gray-700 hover:text-purple-700" routerLink="/dashboard" (click)="mobileOpen.set(false)">Dashboard</a>
+        <a class="text-gray-700 hover:text-purple-700" routerLink="/admin" (click)="mobileOpen.set(false)">Admin</a>
+      </div>
+    </div>
+  </div>
+</nav>
+

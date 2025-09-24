@@ -1,0 +1,118 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 px-4">
+  <div class="max-w-md w-full space-y-8">
+    <!-- Logo/Header -->
+    <div class="text-center">
+      <div class="mx-auto h-12 w-12 rounded-full bg-purple-600 flex items-center justify-center">
+        <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        </svg>
+      </div>
+      <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+        {{ isLogin ? 'Sign in to your account' : 'Create your account' }}
+      </h2>
+      <p class="mt-2 text-sm text-gray-600">
+        {{ isLogin ? "Don't have an account?" : 'Already have an account?' }}
+        <button type="button" (click)="toggleMode()" class="font-medium text-purple-600 hover:text-purple-500 ml-1">
+          {{ isLogin ? 'Sign up' : 'Sign in' }}
+        </button>
+      </p>
+    </div>
+
+    <!-- Form -->
+    <form class="mt-8 space-y-6" (ngSubmit)="onSubmit()">
+      <div class="space-y-4">
+        <!-- Name field (register only) -->
+        <div *ngIf="!isLogin">
+          <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            [(ngModel)]="name"
+            required
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="Enter your full name"
+          />
+        </div>
+
+        <!-- Email field -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            [(ngModel)]="email"
+            required
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="you@example.com"
+          />
+        </div>
+
+        <!-- Password field -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            [(ngModel)]="password"
+            required
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            [placeholder]="isLogin ? 'Enter your password' : 'Choose a secure password'"
+          />
+        </div>
+
+        <!-- Confirm Password field (register only) -->
+        <div *ngIf="!isLogin">
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            [(ngModel)]="confirmPassword"
+            required
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            placeholder="Confirm your password"
+          />
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div *ngIf="error" class="rounded-md bg-red-50 p-4">
+        <div class="flex">
+          <svg class="h-5 w-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+          </svg>
+          <div class="ml-3">
+            <p class="text-sm text-red-800">{{ error }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit button -->
+      <div>
+        <button
+          type="submit"
+          [disabled]="loading"
+          class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200"
+        >
+          <span *ngIf="loading" class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <svg class="h-5 w-5 text-purple-300 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+            </svg>
+          </span>
+          {{ loading ? 'Please wait...' : (isLogin ? 'Sign in' : 'Create account') }}
+        </button>
+      </div>
+
+      <!-- Admin tip for login -->
+      <div *ngIf="isLogin" class="text-center">
+        <p class="text-xs text-gray-500 bg-gray-50 rounded-lg p-3">
+          💡 <strong>Tip:</strong> Use an email ending with <code class="bg-gray-200 px-1 rounded">@admin.com</code> to get admin access
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
