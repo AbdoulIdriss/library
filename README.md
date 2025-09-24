@@ -7,6 +7,10 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 - Email: `admin@local.test`
 - Password: `Admin123!`
 
+## User Login (Local Development)
+- Email: `katana@gmail.com`
+- Password: `Soul1234@$`
+
 If the account does not exist, run the backend seed:
 
 - In `/backend`: `npm run seed:admin`
